@@ -25,9 +25,9 @@ unzip(zipfile="/R/data/Dataset.zip" ,exdir="/R/data")
 
 
 dataPath <- file.path("/R/data" , "UCI HAR Dataset")
-trainSubjects <- read.table(file.path(dataPath, "train", "subject_train.txt"))
-trainValues <- read.table(file.path(dataPath, "train", "X_train.txt"))
-trainActivity <- read.table(file.path(dataPath, "train", "y_train.txt"))
+trainingSubjects <- read.table(file.path(dataPath, "train", "subject_train.txt"))
+trainingValues <- read.table(file.path(dataPath, "train", "X_train.txt"))
+trainingActivity <- read.table(file.path(dataPath, "train", "y_train.txt"))
 ## Load train data
 
 
@@ -48,7 +48,7 @@ colnames(activities) <- c("activityId", "activityLabel")
 
 
 humanActivity <- rbind(
-  cbind(trainSubjects, trainValues, trainActivity),
+  cbind(trainingSubjects, trainingValues, trainingActivity),
   cbind(testSubjects, testValues, testActivity)
 )
 ##Merge data
@@ -88,7 +88,11 @@ humanActivityMeans <- humanActivity %>%
 ##Calculate mean
 
 
-write.table(humanActivityMeans, "/R/data/tidy_data.txt", row.names = FALSE, 
+
+humanActivityMeans<-humanActivityMeans[order(humanActivityMeans$subject,humanActivityMeans$activity),]
+
+
+
 write.table(humanActivityMeans, "/R/data/tidy_data.txt", row.names = FALSE, 
             quote = FALSE)
 ##Write data
